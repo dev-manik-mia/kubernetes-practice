@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caddy-config
+  namespace: app
+data:
+  Caddyfile: |
+    :80 {
+        route /api* {
+            uri strip_prefix /api
+            reverse_proxy backend:8080
+        }
+        route {
+            reverse_proxy frontend:80
+        }
+    }
